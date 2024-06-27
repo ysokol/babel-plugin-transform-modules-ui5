@@ -80,6 +80,21 @@ export function wrap(visitor, programNode, opts) {
     body = newBody;
   }
 
+  // fix for @before-define
+  if (!opts.noWrapBeforeImport) {
+    const isPreDefine = function (item) {
+      return (
+        item.leadingComments &&
+        item.leadingComments[0] &&
+        item.leadingComments[0].value &&
+        item.leadingComments[0].value.trim() === "@before-define"
+      );
+    };
+
+    preDefine.push(...body.filter(isPreDefine));
+    body = body.filter((item) => !isPreDefine(item));
+  }
+
   if (injectDynamicImportHelper) {
     // import() to sap.ui.require() w/ promise and interop
     body.unshift(th.buildDynamicImportHelper());
