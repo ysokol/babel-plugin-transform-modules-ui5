@@ -69,7 +69,7 @@ There are 2 main features of the plugin, and you can use both or one without the
 1. Converting ES modules (import/export) into sap.ui.define or sap.ui.require.
 2. Converting ES classes into Control.extend(..) syntax.
 
-**NOTE:** The class transform will be split into its own plugin in the future.
+**NOTE:** The class transform might be split into its own plugin in the future.
 
 This only transforms the UI5 relevant things. It does not transform everything to ES5 (for example it does not transform const/let to var). This makes it easier to use `@babel/preset-env` to transform things correctly.
 
@@ -118,17 +118,19 @@ Becomes:
 
 ```js
 sap.ui.define(['app/File'], function(__File) {
-    function _interopRequireDefault(obj) {
-        return (obj && obj.__esModule && (typeof obj.default !== "undefined")) ? obj.default : obj;
-    }
-    const Default = _interopRequireDefault(__File);
-    const Name1 = __File["Name1"];
-    const Name2 = __File["Name2"];
-    const File = __File;
+  "use strict";
+
+  function _interopRequireDefault(obj) {
+      return (obj && obj.__esModule && (typeof obj.default !== "undefined")) ? obj.default : obj;
+  }
+  const Default = _interopRequireDefault(__File);
+  const Name1 = __File["Name1"];
+  const Name2 = __File["Name2"];
+  const File = __File;
 }
 ```
 
-Also refer to the `noImportInteropPrefixes` option below.
+Also refer to the `noImportInteropPrefixes` and `neverUseStrict` option below.
 
 #### Dynamic Import
 
@@ -321,9 +323,13 @@ export default {
   A,
   X,
 };
+```
 
-//////// Generates
-("use strict");
+Outputs:
+
+```js
+"use strict";
+
 const X = 1;
 sap.ui.define(["./a"], A => {
   return {
@@ -332,6 +338,8 @@ sap.ui.define(["./a"], A => {
   };
 });
 ```
+
+Also refer to the `neverUseStrict` option below.
 
 ### Converting ES classes into Control.extend(..) syntax
 
@@ -370,7 +378,7 @@ If the default file-based namespace does not work for you (perhaps the app name 
 
 ##### JSDoc
 
-The simplest way to override the names is to use JSDoc. This approach will also work well with classes output from TypeScript if you configure TypeScript to generate ES6 or higher, and don't enable removeComments.
+The simplest way to override the names is to use JSDoc. This approach will also work well with classes output from TypeScript if you configure TypeScript to generate ES6 or higher, and don't enable `removeComments``.
 
 You can set the `@name`/`@alias` directly or just the `@namespace` and have the name derived from the ES class name.
 
@@ -409,7 +417,7 @@ const AController = SAPController.extend("my.app.AController", {
 
 Alternatively, you can use decorators to override the namespace or name used. The same properties as JSDoc will work, but instead of a space, pass the string literal to the decorator function.
 
-NOTE that using a variable is currently not supported, but will be.
+NOTE that using a variable is currently not supported.
 
 ```js
 @alias('my.app.AController')
@@ -461,7 +469,9 @@ class Controller extends SAPController {
 
 #### Instance Class Props
 
-Instance props either get added to the constructor or the onInit function (for controller), or get added to the extend object. However in v7, there will be a breaking change to always put instance props in either the constructor or the onInit, so if you want a prop in the extend object, it's best to use a static prop.
+Instance props either get added to the constructor or to the `onInit` function (for controllers).
+
+Before version 7.x, they could also get added directly to the `SomeClass.extend(..)` config object, but not anymore now. So if you still want a prop in the extend object, it's best to use a static prop. However, there are some exception where it is known that UI5 expects certain properties in the extend object, like `renderer`, `metadata` and `overrides`<!-- and some configurable cases related to controller extensions (see below)-->.
 
 Refer to the next section to see the logic for determining if `constructor` or `onInit` is used as the init function for class properties.
 
@@ -471,8 +481,8 @@ In the bind method (either constructor or onInit), the properties get added afte
 
 ```js
 class Controller extends SAPController {
-  A = 1; // added to extend object in v6
-  B = Imported.B; // added to extend object in v6
+  A = 1; // added to constructor or onInit (to extend object in v6 and lower)
+  B = Imported.B; // added to constructor or onInit (to extend object in v6 and lower)
   C = () => true; // added to constructor or onInit
   D = this.B.C; // added to constructor or onInit
   E = func(this); // added to constructor or onInit
@@ -553,7 +563,7 @@ class MyController extends Controller {
 }
 ```
 
-### Handling metadata and renderer
+#### Handling metadata and renderer
 
 Because ES classes are not plain objects, you can't have an object property like 'metadata'.
 
@@ -578,8 +588,12 @@ const MyControl = SAPClass.extend('MyControl', {
     }
 });
 ```
-It additionally supports the usage of the new `overrides` class property required for a `ControllerExtension`.
-(For backward compatibility, you can use `overridesToOverride: true`)
+
+#### Properties related to Controller Extensions
+
+The new (as of UI5 1.112) `overrides` class property required for implementing a `ControllerExtension` will also be added to the extend object.
+(For backward compatibility with older UI5 runtimes, you can use `overridesToOverride: true`.)
+
 ```js
 class MyExtension extends ControllerExtension {
 
@@ -588,17 +602,49 @@ class MyExtension extends ControllerExtension {
   }
 }
 ```
+
 is converted to
 
 ```js
 const MyExtension = ControllerExtension.extend("MyExtension", {
-    overrides: {
-      onPageReady: function () {}
-    }
-  });
-  return MyExtension;
-});"
+  overrides: {
+    onPageReady: function () {}
+  }
+});
+return MyExtension;
 ```
+<!--
+When a controller implemented by you *uses* pre-defined controller extensions, in JavaScript the respective extension *class* needs to be assigned to the extend object; the UI5 runtime will instatiate the extension and this *instance* will then be available as `this.extensionName`.
+
+To support the same in TypeScript, while in the JavaScript code a controller *class* must be assigned in the extend object, the TypeScript compiler needs to see that the class property contains an extension *instance*. To support this, the plugin applies special logic which transforms the code accordingly. This logic is triggered with any comment containing the string `@transformControllerExtension` or the `@transformControllerExtension` decorator directly preceding the class property. And the class property must only be typed, but not assigned an instance. (The instance is created by the UI5 framework.)
+
+Example:
+```js
+class MyController extends Controller {
+
+  // @transformControllerExtension
+  routing: Routing; // use the "Routing" extension provided by "sap/fe/core/controllerextensions/Routing"
+
+  someMethod() {
+    this.routing.doSomething();
+  }
+}
+```
+
+is converted to
+
+```js
+const MyController = Controller.extend("MyController", {
+  routing: Routing, // note that this is now the Routing CLASS being assigned as value within the extend object, while above it was the Routing TYPE defining the type of the member property
+  
+  someMethod: function() {
+    this.routing.doSomething();
+  }
+});
+return MyController;
+```
+-->
+#### Static Properties
 
 Since class properties are an early ES proposal, TypeScript's compiler (like babel's class properties transform) moves static properties outside the class definition, and moves instance properties inside the constructor (even if TypeScript is configured to output ESNext).
 
@@ -631,6 +677,28 @@ const MyControl = SAPClass.extend('MyControl', {
 
 **CAUTION** The plugin does not currently search for 'metadata' or 'renderer' properties inside the constructor. So don't apply Babel's class property transform plugin before this one if you have metadata/renderer as instance properties (static properties are safe).
 
+### Comments
+
+In case of defining a *copyright* comment in your source code (detected by a leading `!`) at the first place, the plugin ensures to include it also as leading comment in the generated file at the first place, e.g.:
+
+```ts
+/*!
+ * ${copyright}
+ */
+import Control from "sap/ui/core/Control";
+```
+
+will be converted to:
+
+```js
+/*!
+ * ${copyright}
+ */
+sap.ui.define(["sap/ui/core/Control"], function(Control) { /* ... */ });
+```
+
+In general, comments are preserved, but for each class property/method whose position is changed, only the leading comment(s) are actively moved along with the member. Others may disappear.
+
 ## Options
 
 ### Imports
@@ -660,6 +728,7 @@ const MyControl = SAPClass.extend('MyControl', {
 - `addControllerStaticPropsToExtend` (Default: false) Moves static props of a controller to the extends call. Useful for formatters.
 - `onlyMoveClassPropsUsingThis` (Default: false) Set to use old behavior where only instance class props referencing `this` would be moved to the constructor or onInit. New default is to always move instance props.
 - `overridesToOverride` (Default: false) Changes the name of the static overrides to override when being added to ControllerExtension.extend() allowing to use the new overrides keyword with older UI5 versions
+- `neverUseStrict` (Default: false) Disables the addition of the `"use strict";` directive to the program or `sap.ui.define` callback function.
 
 \* 'collapsing' named exports is a combination of simply ignoring them if their definition is the same as a property on the default export, and also assigning them to the default export.
 
@@ -673,11 +742,11 @@ TODO: more options and better description.
 
 ## Example
 
-[openui5-master-detail-app-ts](https://github.com/r-murphy/openui5-masterdetail-app-ts), which is my fork of SAP's openui5-master-detail-app converted to TypeScript.
+[openui5-master-detail-app-ts](https://github.com/r-murphy/openui5-masterdetail-app-ts), which is a fork of SAP's openui5-master-detail-app converted to TypeScript.
 
 ## Building with Webpack
 
-Take a look at [ui5-loader](https://github.com/MagicCube/ui5-loader) (I have not tried this).
+Take a look at [ui5-loader](https://github.com/MagicCube/ui5-loader) (we have not tried this).
 
 ## Modularization / Preload
 
@@ -685,7 +754,7 @@ UI5 supports Modularization through a mechanism called `preload`, which can comp
 
 Some preload plugins:
 
-- Module/CLI: [openui5-preload](https://github.com/r-murphy/openui5-preload) (Mine)
+- Module/CLI: [openui5-preload](https://github.com/r-murphy/openui5-preload) (also created by Ryan Murphy)
 - Gulp: [gulp-ui5-lib](https://github.com/MagicCube/gulp-ui5-lib) (MagicCube)
 - Grunt: [grunt-openui5](https://github.com/SAP/grunt-openui5) (Official SAP)
 

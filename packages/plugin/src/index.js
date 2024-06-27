@@ -1,4 +1,5 @@
 import { ClassTransformVisitor } from "./classes/visitor";
+import { ClassPre } from "./classes/pre";
 import { ModuleTransformVisitor } from "./modules/visitor";
 
 import { wrap } from "./modules/helpers/wrapper";
@@ -37,6 +38,7 @@ module.exports = () => {
 
         // Properties for Module Transform
         this.programNode = path.node;
+        this.parent = path.parent;
         this.defaultExport = null;
         this.defaultExportNode = null;
         this.exportGlobal = false;
@@ -47,11 +49,16 @@ module.exports = () => {
 
         // Properties for Class Transform
         this.importNames = [];
+        this.importDeclarationPaths = [];
 
         // The classes must be converted right away before any other class transforms get a chance to run.
         path.traverse(ClassTransformVisitor, this);
       },
       exit(path, { opts }) {
+        path.traverse(
+          { ImportDeclaration: ModuleTransformVisitor.ImportDeclaration },
+          this
+        );
         wrap(this, path.node, opts);
       },
     },
@@ -61,6 +68,7 @@ module.exports = () => {
   };
 
   return {
+    pre: ClassPre,
     visitor: UI5Visitor,
   };
 };

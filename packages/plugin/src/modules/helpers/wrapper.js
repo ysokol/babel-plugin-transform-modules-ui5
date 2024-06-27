@@ -21,9 +21,39 @@ export function wrap(visitor, programNode, opts) {
     injectDynamicImportHelper
   );
 
-  if (!needsWrap) return;
+  if (!needsWrap) {
+    // cleanup the program node if it's empty (just having empty imports)
+    programNode.body = programNode.body.filter((node) => {
+      if (t.isExportNamedDeclaration(node)) {
+        return node.declaration != null;
+      }
+      return true;
+    });
+    return;
+  }
 
   let { body } = programNode;
+
+  // find the copyright comment from the original program body and remove it there
+  // since it need to be put around the new program body (which is sap.ui.define)
+  let copyright = body?.[0]?.leadingComments?.find((comment, idx, arr) => {
+    if (comment.value.startsWith("!")) {
+      arr.splice(idx, 1);
+      return true;
+    }
+  });
+
+  // in case of TypeScript transpiling taking place upfront, the copyright comment
+  // is associcated with the program and not the program body, so we need to find it
+  // and move it to the new program body (which is sap.ui.define)
+  if (!copyright) {
+    copyright = visitor.parent?.comments?.find((comment, idx, arr) => {
+      if (comment.value.startsWith("!")) {
+        arr.splice(idx, 1);
+        return true;
+      }
+    });
+  }
 
   let allExportHelperAdded = false;
   let extendAdded = false;
@@ -71,7 +101,11 @@ export function wrap(visitor, programNode, opts) {
         reachedFirstImport = true;
       }
     }
-    if (preDefine.length && !hasUseStrict(programNode)) {
+    if (
+      !opts.neverUseStrict &&
+      preDefine.length &&
+      !hasUseStrict(programNode)
+    ) {
       programNode.directives = [
         t.directive(t.directiveLiteral("use strict")),
         ...(programNode.directives || []),
@@ -139,10 +173,29 @@ export function wrap(visitor, programNode, opts) {
     body.unshift(th.buildDefaultImportInterop());
   }
 
-  programNode.body = [
-    ...preDefine,
-    generateDefine(body, imports, exportGlobal || opts.exportAllGlobal),
-  ];
+  const define = generateDefine(
+    body,
+    imports,
+    exportGlobal || opts.exportAllGlobal,
+    hasUseStrict(programNode)
+  );
+
+  // add the "use strict" directive if not on program node
+  if (!opts.neverUseStrict && !hasUseStrict(programNode)) {
+    const defineFnBody = define.expression.arguments[1].body;
+    defineFnBody.directives = [
+      t.directive(t.directiveLiteral("use strict")),
+      ...(defineFnBody.directives || []),
+    ];
+  }
+
+  programNode.body = [...preDefine, define];
+
+  // if a copyright comment is present we append it to the new program node
+  if (copyright && visitor.parent) {
+    visitor.parent.leadingComments = visitor.parent.leadingComments || [];
+    visitor.parent.leadingComments.unshift(copyright);
+  }
 }
 
 function hasUseStrict(node) {

@@ -20,8 +20,8 @@ function processDirectory(dir) {
   const items = readdirSync(dir);
   // Process Files first
   items
-    .filter(item => item.endsWith(".js") || item.endsWith(".ts"))
-    .forEach(filename => {
+    .filter((item) => item.endsWith(".js") || item.endsWith(".ts"))
+    .forEach((filename) => {
       test(filename, () => {
         const filePath = join(dir, filename);
         let outputPath = filePath
@@ -31,6 +31,13 @@ function processDirectory(dir) {
         try {
           const opts = getOpts(filePath);
           const presets = [];
+          const plugins = [
+            [plugin, opts], // we don't rely on the plugin order anymore!
+            "@babel/plugin-syntax-dynamic-import",
+            "@babel/plugin-syntax-object-rest-spread",
+            ["@babel/plugin-syntax-decorators", { legacy: true }],
+            ["@babel/plugin-syntax-class-properties", { useBuiltIns: true }],
+          ];
 
           if (filePath.endsWith(".ts")) {
             presets.push(["@babel/preset-typescript"]);
@@ -46,22 +53,29 @@ function processDirectory(dir) {
               {
                 targets: undefined, // default targets for preset-env is ES5
                 modules: false,
-                useBuiltIns: "usage",
+                useBuiltIns: "usage", // will include imports to corejs (some tests rely on this)
                 corejs: 2,
               },
             ]);
           }
+
+          if (filePath.endsWith("property-mutators.js")) {
+            plugins.push("@babel/plugin-transform-property-mutators");
+          }
+
+          if (filePath.includes("/decorators/")) {
+            plugins.push([
+              "@babel/plugin-proposal-decorators",
+              { legacy: true },
+            ]);
+          }
+
           const result = transformFileSync(filePath, {
-            plugins: [
-              "@babel/plugin-syntax-dynamic-import",
-              "@babel/plugin-syntax-object-rest-spread",
-              ["@babel/plugin-syntax-decorators", { legacy: true }],
-              ["@babel/plugin-syntax-class-properties", { useBuiltIns: true }],
-              [plugin, opts],
-            ],
+            plugins,
             presets,
             sourceRoot: __dirname,
-            comments: false,
+            comments:
+              filePath.includes("comments") || filename.includes("copyright") || filename.includes("controller-extension-usage"),
             babelrc: false,
           }).code;
 
@@ -95,9 +109,9 @@ function processDirectory(dir) {
 
   // Recurse into directories
   items
-    .map(name => ({ name, path: join(dir, name) }))
-    .filter(item => statSync(item.path).isDirectory())
-    .forEach(item => {
+    .map((name) => ({ name, path: join(dir, name) }))
+    .filter((item) => statSync(item.path).isDirectory())
+    .forEach((item) => {
       describe(item.name, () => {
         processDirectory(item.path);
       });

@@ -1,6 +1,6 @@
 {
   "name": "babel-preset-transform-ui5",
-  "version": "7.1.4",
+  "version": "7.4.2",
   "main": "index.js",
   "license": "MIT",
   "repository": {
@@ -9,11 +9,11 @@
     "directory": "packages/preset"
   },
   "dependencies": {
-    "babel-plugin-transform-modules-ui5": "^7.1.4"
+    "babel-plugin-transform-modules-ui5": "^7.4.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.0",
-    "prettier": "^2.8.4"
+    "@babel/core": "^7.23.3",
+    "prettier": "^3.1.0"
   },
   "scripts": {
     "format": "prettier  --write index.js"

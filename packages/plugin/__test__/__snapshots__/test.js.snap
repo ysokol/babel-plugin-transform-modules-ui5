@@ -2,6 +2,8 @@
 
 exports[`classes class-computed-prop.js 1`] = `
 "sap.ui.define(["sap/class"], function (Controller) {
+  "use strict";
+
   const name = Symbol("_name");
   const Test = Controller.extend("my.TestController", {
     constructor: function constructor() {
@@ -26,6 +28,8 @@ exports[`classes class-computed-prop.js 1`] = `
 
 exports[`classes class-convert-all.js 1`] = `
 "sap.ui.define(["sap/class"], function (SAPClass) {
+  "use strict";
+
   const MyClass = SAPClass.extend("fixtures.classes.MyClass", {});
   class BaseClass {}
   class MyError extends Error {}
@@ -34,6 +38,8 @@ exports[`classes class-convert-all.js 1`] = `
 
 exports[`classes class-convert-calling-super-apply.controller.js 1`] = `
 "sap.ui.define(["sap/ui/core/Controller"], function (Controller) {
+  "use strict";
+
   const MyController = Controller.extend("fixtures.classes.MyController", {
     constructor: function _constructor(arg) {
       console.log("before super");
@@ -51,6 +57,8 @@ exports[`classes class-convert-calling-super-apply.controller.js 1`] = `
 
 exports[`classes class-convert-constructor-keep-annot.controller.js 1`] = `
 "sap.ui.define(["sap/ui/core/Controller"], function (Controller) {
+  "use strict";
+
   const MyController = Controller.extend("fixtures.classes.MyController", {
     constructor: function constructor(arg) {
       console.log("before super");
@@ -75,6 +83,8 @@ exports[`classes class-convert-constructor-keep-annot.controller.js 1`] = `
 
 exports[`classes class-convert-constructor-keep-default.controller.js 1`] = `
 "sap.ui.define(["sap/ui/core/Controller"], function (Controller) {
+  "use strict";
+
   const MyController = Controller.extend("fixtures.classes.MyController", {
     constructor: function _constructor(arg) {
       console.log("before super");
@@ -94,6 +104,8 @@ exports[`classes class-convert-constructor-keep-default.controller.js 1`] = `
 
 exports[`classes class-convert-constructor-move.controller.js 1`] = `
 "sap.ui.define(["sap/ui/core/Controller"], function (Controller) {
+  "use strict";
+
   const MyController = Controller.extend("fixtures.classes.MyController", {
     onInit: function onInit() {
       this.other = 1;
@@ -137,12 +149,16 @@ exports[`classes class-convert-constructor-spread.js 1`] = `
 
 exports[`classes class-convert-controller-basic.controller.js 1`] = `
 "sap.ui.define(["sap/ui/core/Controller"], function (SAPController) {
+  "use strict";
+
   const MyController = SAPController.extend("fixtures.classes.MyController", {});
 });"
 `;
 
 exports[`classes class-convert-controller-extend-static-assign.js 1`] = `
 "sap.ui.define(["sap/SAPController"], function (SAPController) {
+  "use strict";
+
   const MyController = SAPController.extend("test.fixtures.classes.MyController", {
     metadata: meta,
     renderer: {},
@@ -159,6 +175,8 @@ exports[`classes class-convert-controller-extend-static-assign.js 1`] = `
 
 exports[`classes class-convert-controller-extend-static-prop.controller.js 1`] = `
 "sap.ui.define(["sap/SAPClass"], function (SAPController) {
+  "use strict";
+
   const Formatter = {};
   const MyController = SAPController.extend("fixtures.classes.MyController", {
     metadata: {}
@@ -170,6 +188,8 @@ exports[`classes class-convert-controller-extend-static-prop.controller.js 1`] =
 
 exports[`classes class-convert-controller-extension-static-prop.controller.js 1`] = `
 "sap.ui.define(["sap/ui/core/mvc/ControllerExtension"], function (ControllerExtension) {
+  "use strict";
+
   const MyExtension = ControllerExtension.extend("fixtures.classes.MyExtension", {
     overrides: {
       onPageReady: function () {}
@@ -181,6 +201,8 @@ exports[`classes class-convert-controller-extension-static-prop.controller.js 1`
 
 exports[`classes class-convert-controller-extension-static-prop-compatibility.controller.js 1`] = `
 "sap.ui.define(["sap/ui/core/mvc/ControllerExtension"], function (ControllerExtension) {
+  "use strict";
+
   const MyExtension = ControllerExtension.extend("fixtures.classes.MyExtension", {
     override: {
       onPageReady: function () {}
@@ -192,6 +214,8 @@ exports[`classes class-convert-controller-extension-static-prop-compatibility.co
 
 exports[`classes class-convert-controller-multi.controller.js 1`] = `
 "sap.ui.define(["sap/ui/core/Controller", "other"], function (SAPController, __Other) {
+  "use strict";
+
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule && typeof obj.default !== "undefined" ? obj.default : obj;
   }
@@ -204,6 +228,8 @@ exports[`classes class-convert-controller-multi.controller.js 1`] = `
 
 exports[`classes class-convert-controller-w-oninit.controller.js 1`] = `
 "sap.ui.define(["sap/ui/core/Controller"], function (Controller) {
+  "use strict";
+
   const MyController = Controller.extend("test.fixtures.classes.MyController", {
     constructor: function _constructor(arg) {
       console.log("constructor");
@@ -229,6 +255,8 @@ exports[`classes class-convert-controller-w-oninit.controller.js 1`] = `
 
 exports[`classes class-convert-controller-wo-oninit.controller.js 1`] = `
 "sap.ui.define(["sap/ui/core/Controller"], function (Controller) {
+  "use strict";
+
   const MyController = Controller.extend("test.fixtures.classes.MyController", {
     constructor: function _constructor(arg) {
       console.log("constructor");
@@ -247,6 +275,8 @@ exports[`classes class-convert-controller-wo-oninit.controller.js 1`] = `
 
 exports[`classes class-convert-dec-alias.js 1`] = `
 "sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
   const MyClass = SAPClass.extend("x.y.Z", {});
   return MyClass;
 });"
@@ -254,6 +284,8 @@ exports[`classes class-convert-dec-alias.js 1`] = `
 
 exports[`classes class-convert-dec-name.js 1`] = `
 "sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
   const MyClass = SAPClass.extend("x.y.Z", {});
   return MyClass;
 });"
@@ -261,6 +293,8 @@ exports[`classes class-convert-dec-name.js 1`] = `
 
 exports[`classes class-convert-dec-namespace.controller.js 1`] = `
 "sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
   const MyClass = SAPClass.extend("x.y.MyClass", {});
   return MyClass;
 });"
@@ -268,6 +302,8 @@ exports[`classes class-convert-dec-namespace.controller.js 1`] = `
 
 exports[`classes class-convert-dec-nonui5.js 1`] = `
 "sap.ui.define(["other/NotSAPClass"], function (__NotSAPClass) {
+  "use strict";
+
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule && typeof obj.default !== "undefined" ? obj.default : obj;
   }
@@ -280,6 +316,8 @@ exports[`classes class-convert-dec-nonui5.js 1`] = `
 
 exports[`classes class-convert-extend-managed.js 1`] = `
 "sap.ui.define(["sap/ui/core/SAPClass", "./Relative"], function (SAPClass, __Relative) {
+  "use strict";
+
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule && typeof obj.default !== "undefined" ? obj.default : obj;
   }
@@ -331,6 +369,8 @@ exports[`classes class-convert-extend-managed.js 1`] = `
 
 exports[`classes class-convert-file-namespace.controller.controller.js 1`] = `
 "sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
   const MyClass = SAPClass.extend("fixtures.classes.MyClass", {});
   return MyClass;
 });"
@@ -338,6 +378,8 @@ exports[`classes class-convert-file-namespace.controller.controller.js 1`] = `
 
 exports[`classes class-convert-file-namespace-prefixed.controller.js 1`] = `
 "sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
   const MyClass = SAPClass.extend("prefix.fixtures.classes.MyClass", {});
   return MyClass;
 });"
@@ -345,6 +387,8 @@ exports[`classes class-convert-file-namespace-prefixed.controller.js 1`] = `
 
 exports[`classes class-convert-jsdoc-alias.js 1`] = `
 "sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
   const MyClass = SAPClass.extend("x.y.Z", {});
   return MyClass;
 });"
@@ -352,6 +396,8 @@ exports[`classes class-convert-jsdoc-alias.js 1`] = `
 
 exports[`classes class-convert-jsdoc-name.js 1`] = `
 "sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
   const MyClass = SAPClass.extend("x.y.Z", {});
   return MyClass;
 });"
@@ -359,6 +405,8 @@ exports[`classes class-convert-jsdoc-name.js 1`] = `
 
 exports[`classes class-convert-jsdoc-namespace.controller.js 1`] = `
 "sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
   const MyClass = SAPClass.extend("x.y.MyClass", {});
   return MyClass;
 });"
@@ -366,6 +414,8 @@ exports[`classes class-convert-jsdoc-namespace.controller.js 1`] = `
 
 exports[`classes class-convert-jsdoc-namespace.js 1`] = `
 "sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
   const MyClass = SAPClass.extend("x.y.MyClass", {});
   return MyClass;
 });"
@@ -373,6 +423,8 @@ exports[`classes class-convert-jsdoc-namespace.js 1`] = `
 
 exports[`classes class-convert-jsdoc-nonui5.js 1`] = `
 "sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
   class MyClass extends SAPClass {}
   return MyClass;
 });"
@@ -380,6 +432,8 @@ exports[`classes class-convert-jsdoc-nonui5.js 1`] = `
 
 exports[`classes class-convert-metadata-assign.js 1`] = `
 "sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
   const MyClass = SAPClass.extend("test.fixtures.classes.MyClass", {
     metadata: meta,
     renderer: {}
@@ -410,6 +464,8 @@ exports[`classes class-convert-metadata-assign-nested.js 1`] = `
 
 exports[`classes class-convert-metadata-prop.js 1`] = `
 "sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
   const Formatter = {};
   const mdata = {};
   const MyClass = SAPClass.extend("test.fixtures.classes.MyClass", {
@@ -425,6 +481,8 @@ exports[`classes class-convert-metadata-prop.js 1`] = `
 
 exports[`classes class-convert-metadata-static.js 1`] = `
 "sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
   const Formatter = Formatter;
   const mdata = {};
   const MyClass = SAPClass.extend("test.fixtures.classes.MyClass", {
@@ -467,6 +525,8 @@ exports[`classes class-convert-nonui5-return.js 1`] = `
 
 exports[`classes class-convert-only-move-this-binding.js 1`] = `
 "sap.ui.define(["./lib/util", "sap/ui/core/mvc/Controller"], function (Util, Controller) {
+  "use strict";
+
   const AppController = Controller.extend("app.AppController", {
     constructor: function constructor() {
       Controller.prototype.constructor.apply(this, arguments);
@@ -566,8 +626,221 @@ exports[`classes class-fix-with-existing-define.js 1`] = `
 });"
 `;
 
+exports[`classes class-import-meta.js 1`] = `
+"sap.ui.define(["require", "module", "sap/SAPClass"], function (require, module, SAPClass) {
+  "use strict";
+
+  const MyClass = SAPClass.extend("test.fixtures.classes.MyClass", {
+    myUrl: function _myUrl() {
+      return module.url;
+    },
+    resolveUrl: function _resolveUrl(url) {
+      return require.toUrl(url);
+    }
+  });
+  return MyClass;
+});"
+`;
+
+exports[`classic sap-ui-define.ts 1`] = `"sap.ui.define("", ["foo/bar/MyResource"]);"`;
+
+exports[`classic sap-ui-define-copyright.ts 1`] = `
+"/*!
+ * \${copyright}
+ */
+sap.ui.define("", ["foo/bar/MyResource"]);"
+`;
+
+exports[`classic sap-ui-define-copyright-file.ts 1`] = `
+"/*!
+ * \${copyright}
+ */
+
+// define class
+sap.ui.define("", ["foo/bar/MyResource"]);"
+`;
+
+exports[`comments copyright.js 1`] = `
+"/*!
+ * \${copyright}
+ */
+sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
+  const Levels = SAPClass["Levels"];
+  /**
+   * @name test.fixtures.libs.MyClass
+   */
+  const MyClass = SAPClass.extend("test.fixtures.libs.MyClass", {});
+  MyClass.Levels = Levels;
+  return MyClass;
+});"
+`;
+
+exports[`comments copyright-file.js 1`] = `
+"/*!
+ * \${copyright}
+ */
+sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
+  // some imports
+  const Levels = SAPClass["Levels"];
+  /**
+   * @name test.fixtures.libs.MyClass
+   */
+  const MyClass = SAPClass.extend("test.fixtures.libs.MyClass", {});
+  MyClass.Levels = Levels;
+  return MyClass;
+});"
+`;
+
+exports[`comments copyright-multiple-comments.js 1`] = `
+"/*!
+ * \${copyright}
+ */
+sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
+  /**
+   * Some other comment
+   */
+  const Levels = SAPClass["Levels"];
+  /**
+   * @name test.fixtures.libs.MyClass
+   */
+  const MyClass = SAPClass.extend("test.fixtures.libs.MyClass", {});
+  MyClass.Levels = Levels;
+  return MyClass;
+});"
+`;
+
+exports[`comments min-wrap-no-import-copyright.js 1`] = `
+"/*!
+ * \${copyright}
+ */
+sap.ui.define([], function () {
+  "use strict";
+
+  const x = 1; // This should be part of sap-ui-define
+  return x;
+});"
+`;
+
+exports[`comments min-wrap-simple-copyright.js 1`] = `
+"/*!
+ * \${copyright}
+ */
+"use strict";
+
+const x = 1; // This should not be part of sap-ui-define
+sap.ui.define(["./foo"], function (__Foo) {
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule && typeof obj.default !== "undefined" ? obj.default : obj;
+  }
+  const Foo = _interopRequireDefault(__Foo);
+  const y = Foo(x); // This gets wrapped
+  return y;
+});"
+`;
+
+exports[`comments min-wrap-ui5-copyright.js 1`] = `
+"/*!
+ * \${copyright}
+ */
+"use strict";
+
+const x = 1; // This should not be part of sap-ui-define
+sap.ui.define(["sap/m/Button"], function (Button) {
+  const b = new Button();
+  return b;
+});"
+`;
+
+exports[`comments preserve-for-class-members.js 1`] = `
+"sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
+  const Formatter = Formatter;
+  const mdata = {};
+
+  /**
+   * @name test.fixtures.classes.MyClass
+   */
+  const MyClass = SAPClass.extend("test.fixtures.classes.MyClass", {
+    constructor: function constructor() {
+      SAPClass.prototype.constructor.apply(this, arguments);
+      // some comment
+      this.myNumber = 1;
+    },
+    // this property is not moved into the constructor
+    overrides: {},
+    // this is MY method
+    myMethod: function _myMethod() {},
+    /**
+     * this is also my method
+     */
+    myOtherMethod: function _myOtherMethod() {}
+  });
+  /**
+   * block comment
+   */
+  MyClass.myOtherNumber = 42;
+  return MyClass;
+});"
+`;
+
+exports[`decorators mixin.js 1`] = `
+"sap.ui.define(["sap/ui/core/mvc/Controller", "../lib/decorators", "../lib/RoutingSupport"], function (Controller, ___lib_decorators, __RoutingSupport) {
+  "use strict";
+
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule && typeof obj.default !== "undefined" ? obj.default : obj;
+  }
+  var _dec, _class;
+  const mixin = ___lib_decorators["mixin"];
+  const RoutingSupport = _interopRequireDefault(__RoutingSupport);
+  let AppController = (_dec = mixin(RoutingSupport), _dec(_class = class AppController extends Controller {}) || _class);
+  return AppController;
+});"
+`;
+
+exports[`decorators mixin_mixed.js 1`] = `
+"sap.ui.define(["sap/ui/core/mvc/Controller", "../lib/decorators", "../lib/RoutingSupport"], function (Controller, ___lib_decorators, __RoutingSupport) {
+  "use strict";
+
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule && typeof obj.default !== "undefined" ? obj.default : obj;
+  }
+  const mixin = ___lib_decorators["mixin"];
+  const RoutingSupport = _interopRequireDefault(__RoutingSupport);
+  const AppController = Controller.extend("example.controller.AppController", {});
+  return AppController;
+});"
+`;
+
+exports[`decorators ts-class-controller-extension-usage-decorator.ts 1`] = `
+"sap.ui.define(["sap/ui/core/mvc/Controller", "sap/fe/core/controllerextensions/Routing"], function (Controller, Routing) {
+  "use strict";
+
+  /**
+   * @namespace test.controller
+   */
+  const MyExtendedController = Controller.extend("test.controller.MyExtendedController", {
+    routing: Routing
+  });
+  return MyExtendedController;
+});"
+`;
+
+exports[`empty empty_js.js 1`] = `""`;
+
+exports[`empty empty_ts.ts 1`] = `""`;
+
 exports[`examples Animal.js 1`] = `
 "sap.ui.define(["sap/ui/base/ManagedObject"], function (ManagedObject) {
+  "use strict";
+
   const Animal = ManagedObject.extend("examples.Animal", {
     metadata: {
       properties: {
@@ -596,6 +869,8 @@ exports[`examples Animal.js 1`] = `
 
 exports[`examples Cat.js 1`] = `
 "sap.ui.define(["./Animal"], function (__Animal) {
+  "use strict";
+
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule && typeof obj.default !== "undefined" ? obj.default : obj;
   }
@@ -622,6 +897,8 @@ exports[`examples Cat.js 1`] = `
 
 exports[`examples MyError.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   class MyError extends Error {
     constructor(msg) {
       super(msg);
@@ -634,6 +911,8 @@ exports[`examples MyError.js 1`] = `
 
 exports[`examples Utils.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   function multiply(a, b) {
     return a * b;
   }
@@ -650,6 +929,8 @@ exports[`examples Utils.js 1`] = `
 
 exports[`export-collapse _extends-literal.js 1`] = `
 "sap.ui.define(["x"], function (__X) {
+  "use strict";
+
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule && typeof obj.default !== "undefined" ? obj.default : obj;
   }
@@ -670,6 +951,8 @@ exports[`export-collapse _extends-literal.js 1`] = `
 
 exports[`export-collapse _extends-variable.js 1`] = `
 "sap.ui.define(["x"], function (__X) {
+  "use strict";
+
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule && typeof obj.default !== "undefined" ? obj.default : obj;
   }
@@ -696,6 +979,8 @@ exports[`export-collapse _extends-variable.js 1`] = `
 
 exports[`export-collapse add-props-obj.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   function one() {}
   function two() {}
   const X = {
@@ -710,6 +995,8 @@ exports[`export-collapse add-props-obj.js 1`] = `
 
 exports[`export-collapse object.assign-literal.js 1`] = `
 "sap.ui.define(["x"], function (__X) {
+  "use strict";
+
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule && typeof obj.default !== "undefined" ? obj.default : obj;
   }
@@ -732,6 +1019,8 @@ exports[`export-collapse object.assign-literal.js 1`] = `
 
 exports[`export-collapse object.assign-variable.js 1`] = `
 "sap.ui.define(["x"], function (__X) {
+  "use strict";
+
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule && typeof obj.default !== "undefined" ? obj.default : obj;
   }
@@ -769,6 +1058,8 @@ exports[`export-error error-obj-prop.js 1`] = `"Unsafe mixing of conflicting def
 
 exports[`export-mixed export-mixed-anon-func.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   var __exports = function () {
     console.log("I am the default");
   };
@@ -780,6 +1071,8 @@ exports[`export-mixed export-mixed-anon-func.js 1`] = `
 
 exports[`export-mixed export-mixed-arrow.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   var __exports = () => {
     return 1;
   };
@@ -791,6 +1084,8 @@ exports[`export-mixed export-mixed-arrow.js 1`] = `
 
 exports[`export-mixed export-mixed-literal.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   const a = 1;
   const b = 2;
   var __exports = {
@@ -807,6 +1102,8 @@ exports[`export-mixed export-mixed-literal.js 1`] = `
 
 exports[`export-mixed export-mixed-named-func.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   function def() {
     console.log("I am the default");
   }
@@ -820,6 +1117,8 @@ exports[`export-mixed export-mixed-named-func.js 1`] = `
 
 exports[`exports export-class.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   function hello() {
     return "hey";
   }
@@ -835,6 +1134,8 @@ exports[`exports export-class.js 1`] = `
 
 exports[`exports export-class-extend-native.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   class MyError extends Error {
     constructor(m) {
       super(m);
@@ -848,6 +1149,8 @@ exports[`exports export-class-extend-native.js 1`] = `
 
 exports[`exports export-default-anon-function.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   let one = 1;
   var __exports = async function () {
     return (await one) + two;
@@ -859,6 +1162,8 @@ exports[`exports export-default-anon-function.js 1`] = `
 
 exports[`exports export-default-arrow-function.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   let one = 1;
   var __exports = () => {
     return one + two;
@@ -870,6 +1175,8 @@ exports[`exports export-default-arrow-function.js 1`] = `
 
 exports[`exports export-default-identifier.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   const x = {};
   x.a = 1;
   return x;
@@ -878,6 +1185,8 @@ exports[`exports export-default-identifier.js 1`] = `
 
 exports[`exports export-default-named-function.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   let one = 1;
   function add() {
     return one + two + this.x;
@@ -890,6 +1199,8 @@ exports[`exports export-default-named-function.js 1`] = `
 
 exports[`exports export-multiple.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   const thing1 = {};
   const thing2 = 2;
   const thingy3 = 3;
@@ -919,6 +1230,8 @@ exports[`exports export-multiple.js 1`] = `
 
 exports[`exports export-named-as-default.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   const one = 1;
   var __exports = {
     __esModule: true
@@ -930,6 +1243,8 @@ exports[`exports export-named-as-default.js 1`] = `
 
 exports[`exports export-named-from.js 1`] = `
 "sap.ui.define(["A", "path/having-dash"], function (__A, __path_having_dash) {
+  "use strict";
+
   var __exports = {
     __esModule: true
   };
@@ -943,6 +1258,8 @@ exports[`exports export-named-from.js 1`] = `
 
 exports[`exports export-obj.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   function getFoo() {
     return 1;
   }
@@ -959,6 +1276,8 @@ exports[`exports export-obj.js 1`] = `
 
 exports[`flow flow-exports.js 1`] = `
 "sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
   const Foo = SAPClass.extend("Foo", {});
   return Foo;
 });"
@@ -966,14 +1285,22 @@ exports[`flow flow-exports.js 1`] = `
 
 exports[`imports import-all.js 1`] = `
 "sap.ui.define(["G"], function (G) {
+  "use strict";
+
   return G;
 });"
 `;
 
-exports[`imports import-at-sign.js 1`] = `"sap.ui.define(["@babel/polyfill", "dash-separated"], function (___babel_polyfill, __dash_separated) {});"`;
+exports[`imports import-at-sign.js 1`] = `
+"sap.ui.define(["@babel/polyfill", "dash-separated"], function (___babel_polyfill, __dash_separated) {
+  "use strict";
+});"
+`;
 
 exports[`imports import-duplicate-src-1.js 1`] = `
 "sap.ui.define(["X"], function (XA) {
+  "use strict";
+
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule && typeof obj.default !== "undefined" ? obj.default : obj;
   }
@@ -985,6 +1312,8 @@ exports[`imports import-duplicate-src-1.js 1`] = `
 
 exports[`imports import-duplicate-src-2.js 1`] = `
 "sap.ui.define(["X"], function (__XD) {
+  "use strict";
+
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule && typeof obj.default !== "undefined" ? obj.default : obj;
   }
@@ -997,6 +1326,8 @@ exports[`imports import-duplicate-src-2.js 1`] = `
 
 exports[`imports import-duplicate-src-3.js 1`] = `
 "sap.ui.define(["X"], function (__XD) {
+  "use strict";
+
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule && typeof obj.default !== "undefined" ? obj.default : obj;
   }
@@ -1009,9 +1340,11 @@ exports[`imports import-duplicate-src-3.js 1`] = `
 
 exports[`imports import-dynamic.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   function __ui5_require_async(path) {
-    return new Promise((resolve, reject) => {
-      sap.ui.require([path], module => {
+    return new Promise(function (resolve, reject) {
+      sap.ui.require([path], function (module) {
         if (!(module && module.__esModule)) {
           module = module === null || !(typeof module === "object" && path.endsWith("/library")) ? {
             default: module
@@ -1021,7 +1354,7 @@ exports[`imports import-dynamic.js 1`] = `
           });
         }
         resolve(module);
-      }, err => {
+      }, function (err) {
         reject(err);
       });
     });
@@ -1040,6 +1373,8 @@ exports[`imports import-dynamic.js 1`] = `
 
 exports[`imports import-modules-map.js 1`] = `
 "sap.ui.define(["./vendor/browser-polyfill"], function (__X) {
+  "use strict";
+
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule && typeof obj.default !== "undefined" ? obj.default : obj;
   }
@@ -1052,6 +1387,8 @@ exports[`imports import-modules-map.js 1`] = `
 
 exports[`imports import-modules-map-fn.js 1`] = `
 "sap.ui.define(["./vendor/browser-polyfill"], function (__X) {
+  "use strict";
+
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule && typeof obj.default !== "undefined" ? obj.default : obj;
   }
@@ -1064,6 +1401,8 @@ exports[`imports import-modules-map-fn.js 1`] = `
 
 exports[`imports import-multiple.js 1`] = `
 "sap.ui.define(["./../a/b", "path/having-dash", "A", "BC", "DEF", "G", "HI"], function (____a_b, __path_having_dash, __A, __BC, __D, G, __H) {
+  "use strict";
+
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule && typeof obj.default !== "undefined" ? obj.default : obj;
   }
@@ -1078,9 +1417,17 @@ exports[`imports import-multiple.js 1`] = `
 });"
 `;
 
+exports[`imports import-remove-fileext.js 1`] = `
+"sap.ui.define(["@dummy/chart.js", "chart.js", "array-flatten/dist/index", "./_private_/module_js", "./_private_/module_jsx", "./_private_/module_ts", "./_private_/module_tsx", "./_private_/unknown_module.js"], function (___dummy_chartjs, __chartjs, __array_flatten_dist_indexjs, ____private__module_jsjs, ____private__module_jsxjs, ____private__module_tsjs, ____private__module_tsxjs, ____private__unknown_modulejs) {
+  "use strict";
+});"
+`;
+
 exports[`libs libs-other-imports.js 1`] = `
 "import _ from "lodash";
 sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
   const Levels = SAPClass["Levels"];
   const MyClass = SAPClass.extend("test.fixtures.libs.MyClass", {});
   MyClass.Levels = Levels;
@@ -1090,6 +1437,8 @@ sap.ui.define(["sap/SAPClass"], function (SAPClass) {
 
 exports[`libs libs-sap-imports.js 1`] = `
 "sap.ui.define(["sap/SAPClass"], function (SAPClass) {
+  "use strict";
+
   const Levels = SAPClass["Levels"];
   const MyClass = SAPClass.extend("test.fixtures.libs.MyClass", {});
   MyClass.Levels = Levels;
@@ -1097,8 +1446,21 @@ exports[`libs libs-sap-imports.js 1`] = `
 });"
 `;
 
+exports[`libs libs-sap-imports-dashes.js 1`] = `
+"sap.ui.define(["sap/SAPClass-with-dashes"], function (SAPClassDashes) {
+  "use strict";
+
+  const Levels = SAPClassDashes["Levels"];
+  const MyClass = SAPClassDashes.extend("test.fixtures.libs.MyClass", {});
+  MyClass.Levels = Levels;
+  return MyClass;
+});"
+`;
+
 exports[`min-wrap min-wrap-no-import.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   const x = 1;
   return x;
 });"
@@ -1130,11 +1492,13 @@ sap.ui.define(["sap/m/Button"], function (Button) {
 
 exports[`mixed mixed-import-export.js 1`] = `
 "sap.ui.define(["1", "2", "3", "4", "5"], function (__1, __2, __3, __4, __5) {
+  "use strict";
+
   var __exports = {
     __esModule: true
   };
   function extendExports(exports, obj) {
-    Object.keys(obj).forEach(function (key) {
+    obj && Object.keys(obj).forEach(function (key) {
       if (key === "default" || key === "__esModule") return;
       Object.defineProperty(exports, key, {
         enumerable: true,
@@ -1154,6 +1518,21 @@ exports[`mixed mixed-import-export.js 1`] = `
 });"
 `;
 
+exports[`never-use-strict use-strict-define.js 1`] = `
+"sap.ui.define(["sap/m/Button"], function (Button) {
+  const b = new Button();
+  return b;
+});"
+`;
+
+exports[`never-use-strict use-strict-program.js 1`] = `
+"const x = 1;
+sap.ui.define(["sap/m/Button"], function (Button) {
+  const b = new Button();
+  return b;
+});"
+`;
+
 exports[`no-wrap nowrap-existing-sap.ui.define.js 1`] = `
 "sap.ui.define(["JSONModel"], JSONModel => {
   return new JSONModel();
@@ -1168,6 +1547,8 @@ exports[`no-wrap skip-iffe.js 1`] = `
 
 exports[`preset-env preset-env-class.js 1`] = `
 "sap.ui.define(["sap/class"], function (SAPClass) {
+  "use strict";
+
   var MyClass = SAPClass.extend("my.MyClass", {
     constructor: function constructor() {
       SAPClass.prototype.constructor.apply(this, arguments);
@@ -1185,11 +1566,30 @@ exports[`preset-env preset-env-class.js 1`] = `
 });"
 `;
 
+exports[`preset-env preset-env-property-mutators.js 1`] = `
+"sap.ui.define(["sap/class", "core-js/modules/es6.object.define-properties.js"], function (SAPClass, __core_js_modules_es6objectdefine_propertiesjs) {
+  "use strict";
+
+  var MyClass = SAPClass.extend("my.MyClass", Object.defineProperties({}, {
+    thing: {
+      get: function get() {
+        return this._thing;
+      },
+      set: function set(value) {
+        this._thing = value;
+      },
+      configurable: true,
+      enumerable: true
+    }
+  }));
+  return MyClass;
+});"
+`;
+
 exports[`preset-env preset-env-usage.js 1`] = `
-"sap.ui.define(["sap/SAPClass", "core-js/modules/es6.object.to-string.js"], function (SAPClass, __core_js_modules_es6objectto_stringjs) {
-  import "core-js/modules/es6.promise.js";
-  import "core-js/modules/es6.string.includes.js";
-  import "core-js/modules/es7.array.includes.js";
+"sap.ui.define(["sap/SAPClass", "core-js/modules/es6.object.to-string.js", "core-js/modules/es6.promise.js", "core-js/modules/es6.string.includes.js", "core-js/modules/es7.array.includes.js"], function (SAPClass, __core_js_modules_es6objectto_stringjs, __core_js_modules_es6promisejs, __core_js_modules_es6stringincludesjs, __core_js_modules_es7arrayincludesjs) {
+  "use strict";
+
   var AClass = SAPClass.extend("my.MyClass", {
     delay: function _delay() {
       return new Promise(function (resolve) {
@@ -1204,8 +1604,166 @@ exports[`preset-env preset-env-usage.js 1`] = `
 });"
 `;
 
+exports[`typescript ts-class-anonymous.ts 1`] = `
+"sap.ui.define(["sap/Class"], function (SAPClass) {
+  "use strict";
+
+  const MyClass = SAPClass.extend("MyClass", {
+    createAnonymousClass: function _createAnonymousClass() {
+      return new class {
+        getClipboardContentType() {}
+      }();
+    }
+  });
+  return MyClass;
+});"
+`;
+
+exports[`typescript ts-class-anonymous-copyright.ts 1`] = `
+"/*!
+ * \${copyright}
+ */
+sap.ui.define(["sap/Class"], function (SAPClass) {
+  "use strict";
+
+  /**
+   * @name MyClass
+   */
+  const MyClass = SAPClass.extend("MyClass", {
+    createAnonymousClass: function _createAnonymousClass() {
+      return new class {
+        getClipboardContentType() {
+          /* ... */
+        }
+      }();
+    }
+  });
+  return MyClass;
+});"
+`;
+
+exports[`typescript ts-class-anonymous-copyright-file.ts 1`] = `
+"/*!
+ * \${copyright}
+ */
+sap.ui.define(["sap/Class"], function (SAPClass) {
+  "use strict";
+
+  /**
+   * @name MyClass
+   */
+  const MyClass = SAPClass.extend("MyClass", {
+    createAnonymousClass: function _createAnonymousClass() {
+      return new class {
+        getClipboardContentType() {
+          /* ... */
+        }
+      }();
+    }
+  });
+  return MyClass;
+});"
+`;
+
+exports[`typescript ts-class-controller-extension-usage.ts 1`] = `
+"sap.ui.define(["sap/ui/core/mvc/Controller", "sap/fe/core/controllerextensions/Routing", "sap/fe/core/controllerextensions/OtherExtension", "sap/fe/core/controllerextensions/ThirdExtension", "sap/fe/core/controllerextensions/DoubleExportExtension", "sap/fe/core/controllerextensions/ManyExtensions"], function (Controller, Routing, sap_fe_core_controllerextensions_OtherExtension, ThirdExtension, sap_fe_core_controllerextensions_DoubleExportExtension, extensionCollection) {
+  "use strict";
+
+  const OtherExtension = sap_fe_core_controllerextensions_OtherExtension["OtherExtension"];
+  const SomethingElse = sap_fe_core_controllerextensions_DoubleExportExtension["SomethingElse"];
+  const AlmostRemovedExtension = sap_fe_core_controllerextensions_DoubleExportExtension["AlmostRemovedExtension"];
+  /**
+   * @namespace test.controller
+   */
+  const MyExtendedController = Controller.extend("test.controller.MyExtendedController", {
+    // @transformControllerExtension
+    fifth: extensionCollection.group.OneOfManyExtensions,
+    // @transformControllerExtension
+    fourth: AlmostRemovedExtension,
+    // @transformControllerExtension
+    third: ThirdExtension,
+    // @transformControllerExtension
+    other: OtherExtension,
+    /**
+     * @transformControllerExtension
+     */
+    routing: Routing,
+    constructor: function _constructor() {
+      Controller.prototype.constructor.call(this);
+      this.realPropertyExtension = SomethingElse.Something;
+    }
+  });
+  return MyExtendedController;
+});"
+`;
+
+exports[`typescript ts-class-param-props.ts 1`] = `
+"sap.ui.define(["sap/Class"], function (SAPClass) {
+  "use strict";
+
+  const MyClass = SAPClass.extend("MyClass", {
+    constructor: function _constructor(bar, x, y) {
+      SAPClass.prototype.constructor.call(this);
+      this.bar = bar;
+      this.x = x;
+      this.y = y;
+      this.foo = bar.getFoo();
+    }
+  });
+  return MyClass;
+});"
+`;
+
+exports[`typescript ts-class-param-props-copyright.ts 1`] = `
+"/*!
+ * \${copyright}
+ */
+sap.ui.define(["sap/Class"], function (SAPClass) {
+  "use strict";
+
+  /**
+   * @name MyClass
+   */
+  const MyClass = SAPClass.extend("MyClass", {
+    constructor: function _constructor(bar, x, y) {
+      SAPClass.prototype.constructor.call(this);
+      this.bar = bar;
+      this.x = x;
+      this.y = y;
+      this.foo = bar.getFoo();
+    }
+  });
+  return MyClass;
+});"
+`;
+
+exports[`typescript ts-class-param-props-copyright-file.ts 1`] = `
+"/*!
+ * \${copyright}
+ */
+sap.ui.define(["sap/Class"], function (SAPClass) {
+  "use strict";
+
+  /**
+   * @name MyClass
+   */
+  const MyClass = SAPClass.extend("MyClass", {
+    constructor: function _constructor(bar, x, y) {
+      SAPClass.prototype.constructor.call(this);
+      this.bar = bar;
+      this.x = x;
+      this.y = y;
+      this.foo = bar.getFoo();
+    }
+  });
+  return MyClass;
+});"
+`;
+
 exports[`typescript ts-class-props.ts 1`] = `
 "sap.ui.define(["sap/Class"], function (SAPClass) {
+  "use strict";
+
   const MyClass = SAPClass.extend("MyClass", {
     constructor: function constructor() {
       SAPClass.prototype.constructor.apply(this, arguments);
@@ -1222,6 +1780,8 @@ exports[`typescript ts-class-props.ts 1`] = `
 
 exports[`typescript ts-class-props-only-move-this.ts 1`] = `
 "sap.ui.define(["sap/Class"], function (SAPClass) {
+  "use strict";
+
   const MyClass = SAPClass.extend("MyClass", {
     S: "S",
     PS: "PS",
@@ -1235,6 +1795,8 @@ exports[`typescript ts-class-props-only-move-this.ts 1`] = `
 
 exports[`typescript ts-export-default-typed-anon-fn-only-default.ts 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   var __exports = function (date) {
     return "";
   };
@@ -1244,6 +1806,8 @@ exports[`typescript ts-export-default-typed-anon-fn-only-default.ts 1`] = `
 
 exports[`typescript ts-export-default-typed-anon-obj.ts 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   var __exports = {
     x: 1
   };
@@ -1253,6 +1817,8 @@ exports[`typescript ts-export-default-typed-anon-obj.ts 1`] = `
 
 exports[`typescript ts-export-default-typed-arrow-fn-only-default.ts 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   const fn = date => {
     return "";
   };
@@ -1265,6 +1831,8 @@ exports[`typescript ts-export-default-typed-arrow-fn-only-default.ts 1`] = `
 
 exports[`typescript ts-export-default-typed-arrow-fn-with-named.1.ts 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   const fn = date => {
     return "";
   };
@@ -1278,13 +1846,15 @@ exports[`typescript ts-export-default-typed-arrow-fn-with-named.1.ts 1`] = `
 
 exports[`typescript ts-export-interface.ts 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   const MY_CONSTANT = "constant";
-  var MyEnum;
-  (function (MyEnum) {
+  var MyEnum = function (MyEnum) {
     MyEnum[MyEnum["A"] = 0] = "A";
     MyEnum[MyEnum["B"] = 1] = "B";
     MyEnum[MyEnum["C"] = 2] = "C";
-  })(MyEnum || (MyEnum = {}));
+    return MyEnum;
+  }(MyEnum || {});
   ;
   var __exports = {
     __esModule: true
@@ -1297,6 +1867,8 @@ exports[`typescript ts-export-interface.ts 1`] = `
 
 exports[`typescript ts-export-type.ts 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   class Class {}
   var __exports = {
     __esModule: true
@@ -1306,8 +1878,246 @@ exports[`typescript ts-export-type.ts 1`] = `
 });"
 `;
 
+exports[`typescript ts-export-type-only.ts 1`] = `""`;
+
+exports[`typescript ts-index.ts 1`] = `
+"sap.ui.define(["./_private_/index"], function (____private__index) {
+  "use strict";
+
+  var __exports = {
+    __esModule: true
+  };
+  function extendExports(exports, obj) {
+    obj && Object.keys(obj).forEach(function (key) {
+      if (key === "default" || key === "__esModule") return;
+      Object.defineProperty(exports, key, {
+        enumerable: true,
+        get: function get() {
+          return obj[key];
+        }
+      });
+    });
+  }
+  extendExports(__exports, ____private__index);
+  return __exports;
+});"
+`;
+
+exports[`typescript ts-re-export.ts 1`] = `
+"sap.ui.define(["module", "./having-a-dash", "path/having-a-dash"], function (__module, ___having_a_dash, __path_having_a_dash) {
+  "use strict";
+
+  var __exports = {
+    __esModule: true
+  };
+  function extendExports(exports, obj) {
+    obj && Object.keys(obj).forEach(function (key) {
+      if (key === "default" || key === "__esModule") return;
+      Object.defineProperty(exports, key, {
+        enumerable: true,
+        get: function get() {
+          return obj[key];
+        }
+      });
+    });
+  }
+  extendExports(__exports, __module);
+  extendExports(__exports, ___having_a_dash);
+  extendExports(__exports, __path_having_a_dash);
+  return __exports;
+});"
+`;
+
+exports[`typescript ts-re-export-type-only.ts 1`] = `
+"sap.ui.define(["./ts-export-type-only"], function (___ts_export_type_only) {
+  "use strict";
+
+  var __exports = {
+    __esModule: true
+  };
+  function extendExports(exports, obj) {
+    obj && Object.keys(obj).forEach(function (key) {
+      if (key === "default" || key === "__esModule") return;
+      Object.defineProperty(exports, key, {
+        enumerable: true,
+        get: function get() {
+          return obj[key];
+        }
+      });
+    });
+  }
+  extendExports(__exports, ___ts_export_type_only);
+  return __exports;
+});"
+`;
+
+exports[`typescript-preset-env ts-class-anonymous.ts 1`] = `
+"sap.ui.define(["sap/Class", "core-js/modules/es6.symbol.js", "core-js/modules/es6.number.constructor.js"], function (SAPClass, __core_js_modules_es6symboljs, __core_js_modules_es6numberconstructorjs) {
+  "use strict";
+
+  function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+  function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+  var MyClass = SAPClass.extend("MyClass", {
+    createAnonymousClass: function _createAnonymousClass() {
+      return new (function () {
+        function _class() {
+          _classCallCheck(this, _class);
+        }
+        _createClass(_class, [{
+          key: "getClipboardContentType",
+          value: function getClipboardContentType() {}
+        }]);
+        return _class;
+      }())();
+    }
+  });
+  return MyClass;
+});"
+`;
+
+exports[`typescript-preset-env ts-class-anonymous-copyright.ts 1`] = `
+"/*!
+ * \${copyright}
+ */
+sap.ui.define(["sap/Class", "core-js/modules/es6.symbol.js", "core-js/modules/es6.number.constructor.js"], function (SAPClass, __core_js_modules_es6symboljs, __core_js_modules_es6numberconstructorjs) {
+  "use strict";
+
+  function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+  function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+  /**
+   * @name MyClass
+   */
+  var MyClass = SAPClass.extend("MyClass", {
+    createAnonymousClass: function _createAnonymousClass() {
+      return new ( /*#__PURE__*/function () {
+        function _class() {
+          _classCallCheck(this, _class);
+        }
+        _createClass(_class, [{
+          key: "getClipboardContentType",
+          value: function getClipboardContentType() {
+            /* ... */
+          }
+        }]);
+        return _class;
+      }())();
+    }
+  });
+  return MyClass;
+});"
+`;
+
+exports[`typescript-preset-env ts-class-anonymous-copyright-file.ts 1`] = `
+"/*!
+ * \${copyright}
+ */
+sap.ui.define(["sap/Class", "core-js/modules/es6.symbol.js", "core-js/modules/es6.number.constructor.js"], function (SAPClass, __core_js_modules_es6symboljs, __core_js_modules_es6numberconstructorjs) {
+  "use strict";
+
+  function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+  function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+  function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+  function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+  function _toPrimitive(input, hint) { if (_typeof(input) !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (_typeof(res) !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+  /**
+   * @name MyClass
+   */
+  var MyClass = SAPClass.extend("MyClass", {
+    createAnonymousClass: function _createAnonymousClass() {
+      return new ( /*#__PURE__*/function () {
+        function _class() {
+          _classCallCheck(this, _class);
+        }
+        _createClass(_class, [{
+          key: "getClipboardContentType",
+          value: function getClipboardContentType() {
+            /* ... */
+          }
+        }]);
+        return _class;
+      }())();
+    }
+  });
+  return MyClass;
+});"
+`;
+
+exports[`typescript-preset-env ts-class-param-props.ts 1`] = `
+"sap.ui.define(["sap/Class"], function (SAPClass) {
+  "use strict";
+
+  var MyClass = SAPClass.extend("MyClass", {
+    constructor: function _constructor(bar, x, y) {
+      SAPClass.prototype.constructor.call(this);
+      this.bar = bar;
+      this.x = x;
+      this.y = y;
+      this.foo = bar.getFoo();
+    }
+  });
+  return MyClass;
+});"
+`;
+
+exports[`typescript-preset-env ts-class-param-props-copyright.ts 1`] = `
+"/*!
+ * \${copyright}
+ */
+sap.ui.define(["sap/Class"], function (SAPClass) {
+  "use strict";
+
+  /**
+   * @name MyClass
+   */
+  var MyClass = SAPClass.extend("MyClass", {
+    constructor: function _constructor(bar, x, y) {
+      SAPClass.prototype.constructor.call(this);
+      this.bar = bar;
+      this.x = x;
+      this.y = y;
+      this.foo = bar.getFoo();
+    }
+  });
+  return MyClass;
+});"
+`;
+
+exports[`typescript-preset-env ts-class-param-props-copyright-file.ts 1`] = `
+"/*!
+ * \${copyright}
+ */
+sap.ui.define(["sap/Class"], function (SAPClass) {
+  "use strict";
+
+  /**
+   * @name MyClass
+   */
+  var MyClass = SAPClass.extend("MyClass", {
+    constructor: function _constructor(bar, x, y) {
+      SAPClass.prototype.constructor.call(this);
+      this.bar = bar;
+      this.x = x;
+      this.y = y;
+      this.foo = bar.getFoo();
+    }
+  });
+  return MyClass;
+});"
+`;
+
 exports[`wrapping export-const.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   const X = {};
   return X;
 });"
@@ -1315,6 +2125,8 @@ exports[`wrapping export-const.js 1`] = `
 
 exports[`wrapping export-jsdoc-global.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   var __exports = {};
   return __exports;
 }, true);"
@@ -1322,6 +2134,8 @@ exports[`wrapping export-jsdoc-global.js 1`] = `
 
 exports[`wrapping export-literal.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   var __exports = {};
   return __exports;
 });"
@@ -1329,6 +2143,8 @@ exports[`wrapping export-literal.js 1`] = `
 
 exports[`wrapping export-options-global.js 1`] = `
 "sap.ui.define([], function () {
+  "use strict";
+
   var __exports = {};
   return __exports;
 }, true);"

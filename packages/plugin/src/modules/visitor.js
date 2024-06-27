@@ -1,25 +1,100 @@
-import { types as t } from "@babel/core";
+import { join, dirname, resolve } from "path";
+import { existsSync, statSync } from "fs";
+
+import { types as t, template } from "@babel/core";
 import * as th from "../utils/templates";
 import * as ast from "../utils/ast";
 
 import { hasJsdocGlobalExportFlag } from "../classes/helpers/jsdoc";
 
-const tempModuleName = (name) => `__${name}`;
+const resolveSource = (src, filename) => {
+  src = src.replace(/\\/g, "/");
+  const dir = dirname(filename);
+  const absoluteSrc = join(dir, src);
+  if (existsSync(absoluteSrc) && statSync(absoluteSrc).isDirectory) {
+    if (
+      existsSync(join(absoluteSrc, "index.js")) ||
+      existsSync(join(absoluteSrc, "index.jsx")) ||
+      existsSync(join(absoluteSrc, "index.ts")) ||
+      existsSync(join(absoluteSrc, "index.tsx")) ||
+      existsSync(join(absoluteSrc, "index.mjs")) ||
+      existsSync(join(absoluteSrc, "index.cjs"))
+    ) {
+      src = `${src}/index`;
+    }
+  }
+  return src;
+};
 const cleanImportSource = (src) =>
   src.replace(/(\/)|(-)|(@)/g, "_").replace(/\./g, "");
+const tempModuleName = (name) => `__${name}`;
 const hasGlobalExportFlag = (node) => hasJsdocGlobalExportFlag(node);
+const addImport = (imports, imp, filename, first) => {
+  const existingImport = imports.find((i) => i.src === imp.src);
+  if (!existingImport) {
+    // if a module path ends with the file extension ".js" and it can be resolved to
+    // a local file having also the file extension ".js" and not ".js.js" then
+    // we need to slice the file extension to avoid redundant file extension
+    // (the require/define of UI5 always adds the file extension ".js" to the module name)
+    if (/^(?:(@[^/]+)\/)?([^/]+)\/(.*)\.js$/.test(imp.src)) {
+      try {
+        let modulePath;
+        let absModuleSrc = imp.src;
+        // if the module has a relative path, resolve it to an absolute path
+        // and verify if the file exists, if not, try to resolve it as a module
+        if (/^\.\.?\//.test(absModuleSrc)) {
+          absModuleSrc = resolve(dirname(filename), absModuleSrc);
+          // handle the fallback of module names introduced with Node 20.0.0
+          [".js", ".jsx", ".ts", ".tsx"].some((ext) => {
+            if (existsSync(absModuleSrc.replace(/\.js$/, ext))) {
+              modulePath = imp.src;
+              return true;
+            }
+          });
+        } else {
+          modulePath = require.resolve(absModuleSrc);
+        }
+        // detect removal of file extension and log a hint
+        if (modulePath.endsWith(imp.src.split("/").pop())) {
+          console.log(
+            `\x1b[33mHint:\x1b[0m Removed file extension for dependency "\x1b[34m${imp.src}\x1b[0m" found in \x1b[90m${filename}\x1b[0m`
+          );
+          imp.src = imp.src.slice(0, -3);
+        }
+      } catch (ex) {
+        // ignore the error, do not slice file extension as the module
+        // can't be resolved with the given file extension, e.g.
+        // myns/module.js must be provided as myns/module
+        // myns/module.js.js must be provided as myns/module.js
+      }
+    }
+    imports[first ? "unshift" : "push"](imp);
+  }
+};
+const addModuleImport = (imports, name, filename) => {
+  addImport(
+    imports,
+    {
+      src: name,
+      name: name,
+      tmpName: name,
+    },
+    filename,
+    true
+  );
+};
 
 export const ModuleTransformVisitor = {
   /*!
    * Removes the ES6 import and adds the details to the import array in our state.
    */
-  ImportDeclaration(path, { opts = {}, ...state }) {
+  ImportDeclaration(path, { filename, opts = {}, ...state }) {
     const { node } = path;
 
     if (node.importKind === "type") return; // flow-type
 
     const { specifiers, source } = node;
-    const src = source.value.replace(/\\/g, "/");
+    const src = resolveSource(source.value, filename);
 
     // When 'libs' are used, only 'libs' will be converted to UI5 imports.
     const { libs = [".*"] } = opts;
@@ -128,7 +203,12 @@ export const ModuleTransformVisitor = {
     }
 
     // this is the very first import in noWrapBeforeImport mode and there are sibling nodes before this import
-    if (opts.noWrapBeforeImport && !this.firstImportMarked && path.inList && path.key > 0) {
+    if (
+      opts.noWrapBeforeImport &&
+      !this.firstImportMarked &&
+      path.inList &&
+      path.key > 0
+    ) {
       // mark the direct predecessor as the last one to exclude from wrapping
       path.getSibling(path.key - 1).node.lastBeforeWrapping = true;
       this.firstImportMarked = true;
@@ -144,7 +224,7 @@ export const ModuleTransformVisitor = {
     imp.deconstructors = imp.deconstructors.concat(deconstructors);
 
     if (!existingImport) {
-      this.imports.push(imp);
+      addImport(this.imports, imp, filename);
     }
   },
 
@@ -153,17 +233,17 @@ export const ModuleTransformVisitor = {
    * The reason we don't export in place is to handle the situation
    * where a let or var can be defined, and the latest one should be exported.
    */
-  ExportNamedDeclaration(path) {
+  ExportNamedDeclaration(path, { filename }) {
     const { node } = path;
     const { specifiers, declaration, source } = node;
 
     let fromSource = "";
     if (source) {
       // e.g. export { one, two } from 'x'
-      const src = source.value;
+      const src = resolveSource(source.value, filename);
       const name = cleanImportSource(src);
       const tmpName = tempModuleName(name);
-      this.imports.push({ src, name, tmpName });
+      addImport(this.imports, { src, name, tmpName }, filename);
       fromSource = tmpName + ".";
     }
 
@@ -216,7 +296,7 @@ export const ModuleTransformVisitor = {
     }
   },
 
-  ExportDefaultDeclaration(path) {
+  ExportDefaultDeclaration(path, { filename }) {
     const { node } = path;
     let { declaration } = node;
     const declarationName = ast.getIdName(declaration);
@@ -252,12 +332,12 @@ export const ModuleTransformVisitor = {
     }
   },
 
-  ExportAllDeclaration(path) {
-    const src = path.node.source.value;
-    const name = src.replace(/\//g, "_").replace(/\./g, "");
+  ExportAllDeclaration(path, { filename }) {
+    const src = resolveSource(path.node.source.value, filename);
+    const name = cleanImportSource(src);
     const tmpName = tempModuleName(name);
 
-    this.imports.push({ src, name, tmpName });
+    addImport(this.imports, { src, name, tmpName }, filename);
 
     this.exportAllHelper = true;
 
@@ -281,6 +361,28 @@ export const ModuleTransformVisitor = {
         ...node,
         callee: t.identifier("__ui5_require_async"),
       });
+    }
+  },
+
+  MemberExpression(path, { filename }) {
+    const { node } = path;
+    if (node?.object?.type === "MetaProperty") {
+      // replace all "import.meta.url" with "module.url"
+      if (node?.property?.name === "url") {
+        path.replaceWith({
+          ...node,
+          ...template`module.url`(),
+        });
+        addModuleImport(this.imports, "module", filename);
+      }
+      // replace all "import.meta.resolve(...)" with "require.toUrl(...)"
+      else if (node?.property?.name === "resolve") {
+        path.replaceWith({
+          ...node,
+          ...template`require.toUrl`(),
+        });
+        addModuleImport(this.imports, "require", filename);
+      }
     }
   },
 };
